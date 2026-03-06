@@ -26,11 +26,12 @@ export interface OnBidProperty {
 
 export type OnbidApiType = 'general' | 'kamco' | 'regions' | 'categories' | 'detail';
 
-interface FetchParams extends Record<string, string> {
+interface FetchParams {
   pageNo?: string;
   numOfRows?: string;
   cltrNo?: string; // for detail
   pbctNo?: string; // for detail
+  [key: string]: string | undefined;
 }
 
 export async function fetchOnBidData(type: OnbidApiType = 'general', params: FetchParams = {}) {
