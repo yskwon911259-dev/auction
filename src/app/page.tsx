@@ -57,16 +57,18 @@ export default function Home() {
     try {
       const response = await fetch('/api/onbid');
       const data = await response.json();
-      if (data.error || !Array.isArray(data)) {
-        console.warn('Using mock data because API key is missing or error occurred');
+      // If we get an error or an empty array (likely due to invalid API key), use mock data
+      if (data.error || !Array.isArray(data) || data.length === 0) {
+        console.warn('Using mock data because API key is missing, invalid, or error occurred');
         setProperties(mockProperties);
       } else {
         setProperties(data);
       }
     } catch (error) {
+      console.error('Fetch error:', error);
       setProperties(mockProperties);
     } finally {
-      setTimeout(() => setLoading(false), 800); // add a slight delay for better UX
+      setTimeout(() => setLoading(false), 800);
     }
   };
 
